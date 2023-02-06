@@ -1,5 +1,6 @@
 const { response } = require('express')
 const Tag  = require('../models/Tag')
+const model = require('../models/model')
 
 const tagController = {
     getTags : async ( request ,response ) => {

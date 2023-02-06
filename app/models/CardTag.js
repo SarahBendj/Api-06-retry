@@ -4,6 +4,7 @@ const sequelize = require('../database')
 const Tag = require('./Tag')
 const Card = require('./Card')
 
+
 class CardTag extends Model {}
 
 CardTag.init({

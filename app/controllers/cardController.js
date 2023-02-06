@@ -1,6 +1,8 @@
 
 const Card  = require('../models/Card')
-const Tag = require('../models/Tag')
+const CardTag = require('../models/CardTag')
+const Tag =  require('../models/CardTag')
+
 
 const cardController = {
     getCards : async ( request ,response ) => {
@@ -13,32 +15,44 @@ const cardController = {
         response.json({CardId})
     },
     addCard : async(request , response)=> {
-        const  {name , position} = request.body
-        const newCard = await Card.create({description: "lorem fiori ipsum kukulu" , position : 10 , color :'#255447' , list_id : 4 })
+        const  {description , list_id } = request.body
+        console.log(description + list_id + "c'est laaaaaaaaa")
+        const newCard = await Card.create({ description , list_id })
+    
         response.json({newCard})
     },
     updateCard : async (request , response) => {
         const id = request.params.id
+        const {description} = request.body
         const CardToUpdate = await Card.findByPk(id)
-        await Card.update({name: "CHANCE"}, {where: {id:id}})
+        await CardToUpdate.update({description}, {where: {id:id}})
+        
         
         response.json({CardToUpdate})
     },
     deleteCard: async (request , response)=> {
         const id = request.params.id
-        const CardToDelete = await Card.destroy({where :{id:id}})
-        response.json({CardToDelete})
+        try { 
+             const CardToDelete = await Card.destroy({where :{id:id}})
+             response.json({CardToDelete,
+                            message : `la carte ${id} a bien été supprimée`
+                        })
+            }catch(error){
+                response.status(500).json({
+                    statusCode : 500,
+                    Message : "erreur serveur " 
+                 }) 
+             }
     },
     //je dois selecetionner une carte , puis lui ajouter un TAG
-    /*addTagToCard : async (request , response) => {
+    addTagToCard : async (request , response) => {
         const id = request.params.id
-        const cardTagged = await Card.findByPk(id)
-        await Card.update({
-            include : [Tag]
-        })
+        //je recupere la carte que je veux à partir de son ID
         
+        const cardTagged = await Card.findAll( {
+            include : Tag   })
         response.json({cardTagged})
-    },*/
+    },
 
 }
 module.exports = cardController

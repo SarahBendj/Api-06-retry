@@ -15,7 +15,9 @@ Card.init({
         defaultValue: 0
     },
     color: { 
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        allowNull : false,
+        defaultValue : "pink"
     }
 }, {
     sequelize,

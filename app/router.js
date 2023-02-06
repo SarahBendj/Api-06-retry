@@ -4,6 +4,7 @@ const cardController = require('./controllers/cardController')
 const tagController = require('./controllers/tagController')
 const router = new Router
 
+
 //*GET
 router.get('/lists', listController.getLists)
 router.get('/lists/:id', listController.getListById)
@@ -22,7 +23,7 @@ router.get('/cards', cardController.getCards)
 router.get('/cards/:id', cardController.getCardById)
 //*POST
 router.post('/cards' , cardController.addCard)
-//router.post('/cards:id/tags' , cardController.addTagToCard)
+router.post('/cards/:id/tags' , cardController.addTagToCard)
 //*PUT
 router.put('/cards/:id' , cardController.updateCard)
 //*DELETE
